@@ -50,15 +50,18 @@ public class UpdateServlet extends HttpServlet {
             m.setUpdated_at(currentTime);       // 更新日時のみ上書き
 
             // データベースを更新
+
             em.getTransaction().begin();
             em.getTransaction().commit();
+            request.getSession().setAttribute("flush", "更新が完了しました。");       // ここを追記
             em.close();
+
 
             // セッションスコープ上の不要になったデータを削除
             request.getSession().removeAttribute("message_id");
 
             // indexページへリダイレクト
-            response.sendRedirect(request.getContextPath() + "/index");
+            response.sendRedirect(request.getContextPath() + "/Index");
         }
     }
 }
